@@ -1,8 +1,8 @@
 
 NAME = philo
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pthread
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
 
 SRC_DIR = ./
 OBJ_DIR = ./objs

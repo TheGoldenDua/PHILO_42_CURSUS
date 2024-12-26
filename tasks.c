@@ -66,7 +66,8 @@ void	cleanup_tasks(t_data *data)
 	i = -1;
 	while (++i < nb_philos)
 	{
-		pthread_mutex_destroy(&data->forks[i]);
+		if(nb_philos != 1)
+			pthread_mutex_destroy(&data->forks[i]);
 		pthread_mutex_destroy(&data->philos[i].state_lock);
 		pthread_mutex_destroy(&data->philos[i].meals_lock);
 		pthread_mutex_destroy(&data->philos[i].meal_time_lock);

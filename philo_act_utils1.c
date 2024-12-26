@@ -31,8 +31,8 @@ long long get_sleep_time(t_data *data)
 
 void unlock_forks(t_philo *philo)
 {
-    pthread_mutex_unlock(philo->l_fork);
     pthread_mutex_unlock(philo->r_fork);
+    pthread_mutex_unlock(philo->l_fork);
 }
 
 long long get_die_time(t_data *data)

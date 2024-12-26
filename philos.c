@@ -86,19 +86,67 @@ int	take_l_fork(t_philo *philo)
 	return (0);
 }
 
-int	take_forks(t_philo *philo)
+int take_forks(t_philo *philo)
 {
-	if (count_philos(philo->data) == 1)
+    if (count_philos(philo->data) == 1)
 		return (one_philo_case(philo));
-	if (take_r_fork(philo) != 0)
-	{
-		pthread_mutex_unlock(philo->r_fork);
-		return (1);
-	}
-	if (take_l_fork(philo) != 0)
-	{
-		pthread_mutex_unlock(philo->r_fork);
-		return (1);
-	}
-	return (0);
+    if (philo->philo_id % 2 == 0) {
+        if (pthread_mutex_lock(philo->l_fork) != 0) {
+            return 1;
+        }
+        if (pthread_mutex_lock(philo->r_fork) != 0) {
+            pthread_mutex_unlock(philo->l_fork);
+            return 1;
+        }
+    } 
+    else {
+        if (pthread_mutex_lock(philo->r_fork) != 0) {
+            return 1;
+        }
+        if (pthread_mutex_lock(philo->l_fork) != 0) {
+            pthread_mutex_unlock(philo->r_fork);
+            return 1;
+        }
+    }
+    return 0;
 }
+
+
+
+// int	take_forks(t_philo *philo)
+// {
+// 	if (count_philos(philo->data) == 1)
+// 		return (one_philo_case(philo));
+// 	if (take_r_fork(philo) != 0)
+// 	{
+// 		pthread_mutex_unlock(philo->r_fork);
+// 		return (1);
+// 	}
+// 	if (take_l_fork(philo) != 0)
+// 	{
+// 		pthread_mutex_unlock(philo->r_fork);
+// 		return (1);
+// 	}
+// 	return (0);
+// }
+
+
+// int take_forks(t_philo *philo)
+// {
+//     if (count_philos(philo->data) == 1)
+//         return (one_philo_case(philo));
+
+//     // Add a small delay for odd philosophers
+//     if (philo->philo_id % 2 != 0)
+//         usleep(100);
+
+//     if (pthread_mutex_lock(philo->l_fork) != 0) {
+//         return 1; // Failed to lock left fork
+//     }
+//     if (pthread_mutex_lock(philo->r_fork) != 0) {
+//         pthread_mutex_unlock(philo->l_fork); // Unlock left fork if right fork lock fails
+//         return 1;
+//     }
+
+//     return 0; // Success
+// }
