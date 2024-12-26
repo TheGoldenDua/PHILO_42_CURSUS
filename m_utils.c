@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   m_utils.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dua <dua@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: del-ganb <del-ganb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 22:25:19 by del-ganb          #+#    #+#             */
-/*   Updated: 2024/12/26 01:11:30 by dua              ###   ########.fr       */
+/*   Updated: 2024/12/26 06:13:27 by del-ganb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ int	ft_atoi(const char *str)
 	{
 		result = result * 10 + (str[i++] - '0');
 		if ((result * sign) > INT_MAX || (result * sign) < INT_MIN)
-		{
-			printf("Error: Input value exceeds integer limits.\n");
 			return (ERROR_INVALID_INPUT);
-		}
 	}
 	return ((int)(result * sign));
 }
@@ -62,13 +59,13 @@ int	allocate_srcs(t_data *data)
 	return (CODE_SUCCESS);
 }
 
-long long get_time(void)
+long long	get_time(void)
 {
-    struct timeval tv;
+	struct timeval	tv;
 
-    if (gettimeofday(&tv, NULL))
-        return (0);
-    return ((tv.tv_sec * (long long)1000) + (tv.tv_usec / 1000));
+	if (gettimeofday(&tv, NULL))
+		return (0);
+	return ((tv.tv_sec * (long long)1000) + (tv.tv_usec / 1000));
 }
 
 void	ft_usleep(long long sleep_time)

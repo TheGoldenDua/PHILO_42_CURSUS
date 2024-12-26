@@ -1,11 +1,17 @@
-
-NAME = philo
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: del-ganb <del-ganb@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/12/26 06:01:40 by del-ganb          #+#    #+#              #
+#    Updated: 2024/12/26 06:37:32 by del-ganb         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-
-SRC_DIR = ./
-OBJ_DIR = ./objs
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread
 
 SRCS = init.c \
        m_utils.c \
@@ -16,27 +22,24 @@ SRCS = init.c \
        philos.c \
        tasks.c \
        tasks_utils.c \
-       tasks_utils1.c
+       tasks_utils1.c \
+       init_utils.c \
 
-OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+OBJS = $(SRCS:.c=.o)
+NAME = philo
 
-HEADERS = philo.h
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
-	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-all: $(NAME)
+all : $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 clean:
-	rm -rf $(OBJ_DIR)
+	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
 
+.SECONDARY: $(OBJS)
 .PHONY: all clean fclean re
